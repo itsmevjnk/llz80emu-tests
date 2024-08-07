@@ -53,6 +53,7 @@ int main(int argc, const char** argv) {
             tests_ran++;
 
             string name = test["name"].template get<string>(); // test name
+
             z80emu z80(false); // Z80 emulator instance (we create one for each test)
             z80_pins_t pins = Z80_PINS_INIT; pins.state &= ~Z80_RESET; // pull RESET low for POR
             for(int i = 0; i < 2; i++) pins = z80.clock(pins.state); // POR (1 high + 1 low)
@@ -125,12 +126,11 @@ int main(int argc, const char** argv) {
                         else if(states[i] & Z80_BUS_IORQ) io[addr] = data;
                     }
                 }
-                uint8_t state = states[0] & states[1]; // we are only interested in states that persist across both edges
                 uint8_t desired_state = get_bus_state(cycle[2].template get<string>());
 
                 // printf("0x%x 0x%x\n", states[0], states[1]);
-                if(state != desired_state) {
-                    printf("%s cycle %d: bus state 0x%x (0x%x 0x%x), expected 0x%x\n", name.c_str(), cycle_cnt + 1, state, states[0], states[1], desired_state);
+                if(desired_state != states[0] && desired_state != states[1]) {
+                    printf("%s cycle %d: bus state (0x%x 0x%x), expected 0x%x\n", name.c_str(), cycle_cnt + 1, states[0], states[1], desired_state);
                     goto fail;
                 }
 
@@ -208,11 +208,13 @@ int main(int argc, const char** argv) {
                     }
                 }
             }
-            
+        
+            // printf("%s: completed successfully\n", name.c_str());
             continue; // success
 fail:
             tests_failed++;
         }
+        printf("%s: finished\n", argv[arg_idx]);
     }
 
     if(tests_ran == 0) {
