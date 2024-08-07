@@ -223,5 +223,5 @@ fail:
     }
 
     printf("testing finished, %d out of %d tests were successful\n", tests_ran - tests_failed, tests_ran);
-    return tests_failed;
+    return (tests_failed > 0) ? 1 : 0;
 }
