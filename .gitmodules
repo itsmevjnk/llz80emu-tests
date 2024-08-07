@@ -1,0 +1,9 @@
+[submodule "tests"]
+	path = tests
+	url = https://github.com/SingleStepTests/z80.git
+[submodule "llz80emu"]
+	path = llz80emu
+	url = https://github.com/itsmevjnk/llz80emu.git
+[submodule "json"]
+	path = json
+	url = https://github.com/nlohmann/json.git
