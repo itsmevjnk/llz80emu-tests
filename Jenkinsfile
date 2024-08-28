@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone build + test environment') {
             steps {
-                sh 'rm -rf *' // clean up workspace
+                // sh 'rm -rf *' // clean up workspace
                 git url: 'https://github.com/itsmevjnk/llz80emu-tests.git', branch: 'main'
                 sh 'git submodule update --init --remote --recursive llz80emu json' // do not clone tests until building is successful
             }
@@ -13,6 +13,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
+                    rm -rf build
                     mkdir -p build && cd build
                     cmake ..
                     make
