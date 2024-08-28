@@ -70,7 +70,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
                     snykSecurity(
-                        snykInstallation: 'snyk',
+                        snykInstallation: 'Snyk',
                         snykTokenId: 'snyk-token',
                         additionalArguments: '--unmanaged'
                     )
