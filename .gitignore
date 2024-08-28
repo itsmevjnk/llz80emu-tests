@@ -2,3 +2,5 @@ build/
 *.cmake
 CMakeCache.txt
 CMakeFiles/
+cppcheck.xml
+*_snyk_report.json
