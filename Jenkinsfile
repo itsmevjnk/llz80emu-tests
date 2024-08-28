@@ -45,7 +45,7 @@ pipeline {
             }
             post {
                 always {
-                    emailext to: $DEFAULT_RECIPIENTS, attachLog: true,
+                    emailext to: '$DEFAULT_RECIPIENTS', attachLog: true,
                         subject: "[Jenkins CI] ${currentBuild.fullDisplayName}: unit tests finished",
                         body: "${currentBuild.fullDisplayName} unit tests have finished.<br/>Last 30 lines of build log:<br/><pre>\${BUILD_LOG, maxLines=30, escapeHtml=true}</pre><br/>See the build's full log <a href='\${BUILD_URL}'>here</a>.",
                         mimeType: 'text/html'
@@ -79,7 +79,7 @@ pipeline {
             
             post {
                 always {
-                    emailext to: $DEFAULT_RECIPIENTS, attachLog: true,
+                    emailext to: '$DEFAULT_RECIPIENTS', attachLog: true,
                         subject: "[Jenkins CI] ${currentBuild.fullDisplayName}: security analysis finished",
                         body: "${currentBuild.fullDisplayName} security analysis with Snyk has completed.<br/>Last 30 lines of build log:<br/><pre>\${BUILD_LOG, maxLines=30, escapeHtml=true}</pre><br/>See the full Snyk log <a href='\${BUILD_URL}/snykReport/'>here</a>. Also see the build's full log <a href='\${BUILD_URL}'>here</a>.",
                         mimeType: 'text/html'
